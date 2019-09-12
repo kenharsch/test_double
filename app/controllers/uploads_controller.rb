@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  before_action :set_upload, only: [:show, :edit, :update, :destroy]
+  before_action :set_upload, only: [:show, :edit, :update, :destroy, :process_file]
 
   # GET /uploads
   # GET /uploads.json
@@ -10,6 +10,7 @@ class UploadsController < ApplicationController
   # GET /uploads/1
   # GET /uploads/1.json
   def show
+    @accounts = @upload.accounts
   end
 
   # GET /uploads/new
@@ -48,6 +49,14 @@ class UploadsController < ApplicationController
         format.html { render :edit }
         format.json { render json: @upload.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def process_file
+    @upload.process_file
+    respond_to do |format|
+        format.html { redirect_to @upload, notice: 'File Processed.' }
+        format.json { render :show, status: :ok, location: @upload }
     end
   end
 
