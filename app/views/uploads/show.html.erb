@@ -27,9 +27,9 @@
   <tbody>
     <% @accounts.each do |account| %>
       <tr>
-        <td scope="col"><%= account.upload_id %></td>
-        <td scope="col"><%= account.account_string %></td>
-        <td scope="col"><%= account.status %></td>
+        <td><%= account.upload_id %></td>
+        <td><%= account.account_string %></td>
+        <td><%= account.status %></td>
         <td><%= link_to 'Show', account %> | <%= link_to 'Edit', edit_account_path(account) %> | <%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
