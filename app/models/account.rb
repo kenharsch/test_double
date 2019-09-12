@@ -7,6 +7,7 @@ class Account < ApplicationRecord
 
 	def set_values_and_status
 		self.set_account_string
+		self.set_status
 	end
 
 	def set_account_string
@@ -22,6 +23,38 @@ class Account < ApplicationRecord
 		self.account_string = string_value
 	end
 
+	def set_status
+		if !self.all_numbers?(self.account_string)
+			val = "ILL"
+		elsif !self.valid_checksum?(self.account_string)
+			val = "ERR"
+		else
+			#call replace function
+			val = ""
+		end
+		self.status = val
+	end
+
+	def valid_checksum?(account_number)
+		ret = false 
+		unless self.all_numbers?(account_number)
+			int_array = self.split("").map{|c| c.to_i}
+			ret = (int_array[0]*9 + int_array[1]*8 + int_array[2]*7 + int_array[3]*6 + int_array[4]*5 + 
+				int_array[5]*4 + int_array[6]*3 + int_array[7]*2 + int_array[8])%11 == 0
+		end
+		return ret
+	end
+
+	def all_numbers?(account_number)
+		(account_number.length == 9) && (!account_number.include? "?")
+	end
+
+	def replace(input_array)
+		#takes input array, returns array of valid possibilities
+		#this will be a recursive call to check and replace " " with "_" and "|" then check
+		#against STRING_VALS 
+	end
+
 
 	#CONSTANTS
 	ARR_VALS = {
@@ -35,19 +68,6 @@ class Account < ApplicationRecord
 		[" _ ", "  |", "  |"]=>7, 
 		[" _ ", "|_|", "|_|"]=>8, 
 		[" _ ", "|_|", " _|"]=>9
-	}
-
-	ARR_MAP = {
-		0=>[" _ ", "| |", "|_|"], 
-		1=>["   ", "  |", "  |"], 
-		2=>[" _ ", " _|", "|_ "], 
-		3=>[" _ ", " _|", " _|"], 
-		4=>["   ", "|_|", "  |"], 
-		5=>[" _ ", "|_ ", " _|"], 
-		6=>[" _ ", "|_ ", "|_|"], 
-		7=>[" _ ", "  |", "  |"], 
-		8=>[" _ ", "|_|", "|_|"], 
-		9=>[" _ ", "|_|", " _|"]
 	} 
 
 	STRING_VALS = {
