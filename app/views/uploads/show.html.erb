@@ -10,29 +10,27 @@
   <%= link_to "File", url_for(@upload.file) %>
 </p>
 <p>
-	<%=button_to "Process File", process_file_upload_path(@upload) %>
+	<%=button_to "Process File", process_file_upload_path(@upload), :class => "btn btn-info" %>
 </p>
 <h1>Accounts</h1>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Upload</th>
-      <th>Scanned Account Number</th>
-      <th>Status</th>
-      <th colspan="3"></th>
+      <th scope="col">Upload</th>
+      <th scope="col">Scanned Account Number</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @accounts.each do |account| %>
       <tr>
-        <td><%= account.upload_id %></td>
-        <td><%= account.account_string %></td>
-        <td><%= account.status %></td>
-        <td><%= link_to 'Show', account %></td>
-        <td><%= link_to 'Edit', edit_account_path(account) %></td>
-        <td><%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td scope="col"><%= account.upload_id %></td>
+        <td scope="col"><%= account.account_string %></td>
+        <td scope="col"><%= account.status %></td>
+        <td><%= link_to 'Show', account %> | <%= link_to 'Edit', edit_account_path(account) %> | <%= link_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
