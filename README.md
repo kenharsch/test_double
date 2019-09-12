@@ -22,6 +22,10 @@
 * Once uploaded, "Process File" button on the show page runs the processing methods
 * Results of processing (list of account numbers and their status) is shown on process completion
 
+## Test Cases
+* Test Case files have been added to git repo and can be uploaded through the interface
+* Due to time constraints, there are no validations around file type/format, etc
+
 ## Console
 * rails c
 
